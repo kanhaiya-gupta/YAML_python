@@ -1,0 +1,180 @@
+#######################################################################
+## This YAML configuration is for any selection
+##
+## The top node ("tHqLoop") defines a single instance of processing
+## SgTop ntuples into tHqLoop ntuples via the tHqLoopAlg algorithm. The
+## sub-nodes try to make the configuration somewhat self-documenting.
+#######################################################################
+
+## The YAML tree for running the tHqLoop algorithm. Everything under
+## this node is used to configure how the tHqLoopAlg class runs
+
+  ## "selection options" are to define what to save to the tHqLoop ntuples
+selection_options:
+
+  NotWith_taus: False
+  read_truth: False
+
+    # --- jet
+
+  jet_pt_min: 35.0 # jet pt requirement in GeV
+  jet_eta_max: 4.5 # jet eta requirement
+
+    # --- bjet
+
+  bjet_pt_min: 35.0 # jet pt requirement in GeV
+  bjet_eta_max: 2.5 # bjet eta requirement
+
+  # --- lepton pt cuts (change these values taking into account the min pt requirement set some lines below (see lep1_pt_min, etc))
+
+  e_pt_min: 15.0 # e pt requirement in GeV
+  mu_pt_min: 15.0 # mu pt requirement in GeV
+  # tau_pt_min: 15.0 # tau pt requirement in GeV
+
+  # --- lepton eta cuts
+
+  e_eta_max: 2.47 # e eta requirement
+  mu_eta_max: 2.5 # mu eta requirement
+  # tau_eta_max: 2.5 # tau eta requirement
+    
+  # --- lepton eta veto
+
+  e_eta_veto: True
+  e_eta_veto_max: 1.52 # veto electrons in the crack region
+  e_eta_veto_min: 1.37
+    
+  mu_eta_veto: False # veto muons in the central part, since the muon tau olr is not working here (crack in the detector)
+  mu_eta_veto_max: 0.01
+  mu_eta_veto_min: 0.0
+    
+  # tau_eta_veto: True # veto taus in the crack region
+  # tau_eta_veto_max: 1.52
+  # tau_eta_veto_min: 1.37
+
+  # --- btagging
+  # btagWP: mv2c10_PC, DL1r_PC
+  # btagBin: eff_60_0, eff_70_60, eff_77_70, eff_85_77, eff_100_85
+
+  btagWP: DL1r_PC
+  btagBin: eff_70_60
+    
+  use_btag_veto: False
+  btagBin_veto: eff_70_60
+    
+  # --- missing energy
+
+  max_met: 800 # maximum MET requirement in GeV
+  min_met: 5  # minimum MET requirement in GeV
+
+  #====================================================
+  # Change according to specific selection at once
+  #====================================================
+  # number of jets cuts, upper and lower bound are inclusive
+  # if you want a specific numer set both cuts to this number
+
+  # --- number of jets & bjets
+
+  max_njets: 4 # reject events with jet multiplicity larger than this option
+  min_njets: 1 # reject events with jet multiplicity smaller than this option
+  max_nbjets: 2 # reject events with b-jet multiplicity larger than this option
+  min_nbjets: 0 # reject events with b-jet multiplicity smaller than this option
+
+  # --- number of leptons & taus
+
+  max_nleptons: 3 # reject events with lepton multiplicity larger than this option, including taus!
+  min_nleptons: 3 # reject events with lepton multiplicity smaller than this option, including taus!
+
+  # max_ntaus: 0 # max number of taus
+  # min_ntaus: 0 # mimimum number of taus
+
+  # --- pt requirement of leptons
+
+  lep1_pt_min: 27.0 # in GeV 
+  lep2_pt_min: 20.0 # in GeV 
+  lep3_pt_min: 15.0 # in GeV 
+    
+  # in case you are running on the loose tree, do you really want to use loose leptons 
+  #(for example for fake estimatio)
+    
+  run_on_loose: False
+    
+  # range of the mass Z veto
+    
+  mass_ll_Z_max: 10.0 # requirement in GeV
+
+  min_n_SS: 0
+
+  #==============================================
+  # tZq selection 
+  #==============================================
+
+  do_tZq: True
+
+  # -- To run on SRs and all CRs but ttbar CRs
+  min_n_OSSF: 1
+  max_n_OSSF: 2
+  min_n_OSDF: 0
+
+  # -- To run on ttbar CRs
+  #min_n_OSSF: 0
+  #max_n_OSSF: 0
+  #min_n_OSDF: 1
+
+  #==============================================
+  # tHq selection
+  #==============================================
+  # 1. di-tau selection 
+  do_diTau: False
+    
+  # 2. lephad selection 
+  do_lephad: False
+
+  # 3. 2l same sign selection 
+  do_2l_SS: False
+ 
+  # 4. 3l selection
+  do_3l: False
+      
+  #==============================================
+  # fake study
+  #==============================================
+  do_fakeStudy: False
+
+  #==============================================
+  # Systematics within the nominal_Loose tree
+  #==============================================
+  do_WpIsoStudy: False 
+
+  #==============================================
+  # Lepton Isolation WP
+  #==============================================
+  # LeptonIsoWP: IsTight (Default), PLVTight, PLVLoose, PLIVTight, PLIVVeryTight
+  LeptonIsoWP: "PLVLoose"
+
+  #==============================================
+  # Use SFs from ROOT file for PLIV WPs
+  #==============================================
+  # if using PLIVTight or PLIVVeryTight and localLeptonSF: False, then, Iso_SFs = 1.0
+  # localLeptonSF: True
+
+  #==============================================
+  # Systematics
+  #==============================================
+  do_systematics: True
+
+  #==============================================
+  # Use SFs from ROOT file for PLIV WPs
+  #==============================================
+  do_CutFlowTree: True
+
+  #==============================================
+  # additional studies
+  #==============================================
+  do_ProcessedEvents: False
+  do_CutFlowTree: True
+  save_trigger: False
+  do_fakeStudy: False
+  do_WpIsoStudy: False
+
+#######################################################################
+
